@@ -1,4 +1,4 @@
-#include "../readfile.h"
+#include "../utils/readfile.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -15,22 +15,23 @@ int neigs_contain_symbol(int *coords, size_t coords_len, char *input, char looku
 }
 
 int main(int argc, char **argv) {
-    char *filename, *input;
+    AOCInput input;
+    char *filename;
     char number[4];
     int number_len = 0, answer = 0, width = 0;
 
     filename = argc == 2 ? argv[1] : "sample.txt";
     input = read_file_to_string(filename);
 
-    while (input[width] != '\n') {
+    while (input.data[width] != '\n') {
         width++;
     }
     width++;
     printf("Width: %d\n", width);
 
-    for (size_t i = 0; i < strlen(input); i++) {
-        if (input[i] >= 0x30 && input[i] <= 0x39) {
-            number[number_len] = input[i];
+    for (size_t i = 0; i < strlen(input.data); i++) {
+        if (input.data[i] >= 0x30 && input.data[i] <= 0x39) {
+            number[number_len] = input.data[i];
             number_len++;
         } else {
             if (number_len > 3)
@@ -55,7 +56,7 @@ int main(int argc, char **argv) {
 
             int ncoords_len = 6 + (2 * number_len);
 
-            if (neigs_contain_symbol(ncoords, ncoords_len, input, '.')) {
+            if (neigs_contain_symbol(ncoords, ncoords_len, input.data, '.')) {
                 number[number_len] = '\0';
                 answer += atoi(number);
             }
@@ -65,6 +66,5 @@ int main(int argc, char **argv) {
     }
 
     printf("Answer: %d", answer);
-    free(input);
     return 0;
 }
