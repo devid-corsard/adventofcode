@@ -5,17 +5,21 @@
 
 // #define IS_SAMPLE
 
-#ifndef IS_SAMPLE
-
-#define WW 10
-#define MM 25
-#define CARDS 218
-
-#else 
+#ifdef IS_SAMPLE
 
 #define WW 5
 #define MM 8
 #define CARDS 6
+#define P_STR "Card %*d: %d %d %d %d %d | %d %d %d %d %d %d %d %d"
+#define ARS(A,B) &A[0], &A[1], &A[2], &A[3], &A[4], &B[0], &B[1], &B[2], &B[3], &B[4], &B[5], &B[6], &B[7]
+
+#else 
+
+#define WW 10
+#define MM 25
+#define CARDS 218
+#define P_STR "Card %*d: %d %d %d %d %d %d %d %d %d %d | %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d"
+#define ARS(A,B) &A[0], &A[1], &A[2], &A[3], &A[4], &A[5], &A[6], &A[7], &A[8], &A[9], &B[0], &B[1], &B[2], &B[3], &B[4], &B[5], &B[6], &B[7], &B[8], &B[9], &B[10], &B[11], &B[12], &B[13], &B[14], &B[15], &B[16], &B[17], &B[18], &B[19], &B[20], &B[21], &B[22], &B[23], &B[24]
 
 #endif
 
@@ -44,62 +48,8 @@ main(int argc, char** argv)
         } else {
             line[line_pos] = '\0';
             line_pos = 0;
-            #ifndef IS_SAMPLE
-            int res = sscanf(line,
-                             "Card %*d: %d %d %d %d %d %d %d %d %d %d | %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
-                             &win_nums[0],
-                             &win_nums[1],
-                             &win_nums[2],
-                             &win_nums[3],
-                             &win_nums[4],
-                             &win_nums[5],
-                             &win_nums[6],
-                             &win_nums[7],
-                             &win_nums[8],
-                             &win_nums[9],
-                             &my_nums[0],
-                             &my_nums[1],
-                             &my_nums[2],
-                             &my_nums[3],
-                             &my_nums[4],
-                             &my_nums[5],
-                             &my_nums[6],
-                             &my_nums[7],
-                             &my_nums[8],
-                             &my_nums[9],
-                             &my_nums[10],
-                             &my_nums[11],
-                             &my_nums[12],
-                             &my_nums[13],
-                             &my_nums[14],
-                             &my_nums[15],
-                             &my_nums[16],
-                             &my_nums[17],
-                             &my_nums[18],
-                             &my_nums[19],
-                             &my_nums[20],
-                             &my_nums[21],
-                             &my_nums[22],
-                             &my_nums[23],
-                             &my_nums[24]);
-            #endif
-            #ifdef IS_SAMPLE
-            int res = sscanf(line,
-                             "Card %*d: %d %d %d %d %d | %d %d %d %d %d %d %d %d",
-                             &win_nums[0],
-                             &win_nums[1],
-                             &win_nums[2],
-                             &win_nums[3],
-                             &win_nums[4],
-                             &my_nums[0],
-                             &my_nums[1],
-                             &my_nums[2],
-                             &my_nums[3],
-                             &my_nums[4],
-                             &my_nums[5],
-                             &my_nums[6],
-                             &my_nums[7]);
-            #endif
+
+            int res = sscanf(line, P_STR, ARS(win_nums, my_nums));
 
             if (res != WW+MM) {
                 fprintf(stderr, "Failed to parse the line correctly. parsed: %d line: %s\n",
