@@ -3,18 +3,20 @@
 
 #include "../readfile.h"
 
-// #define IS_SAMPLE 1
+// #define IS_SAMPLE
 
 #ifndef IS_SAMPLE
+
 #define WW 10
 #define MM 25
 #define CARDS 218
-#endif
 
-#ifdef IS_SAMPLE
+#else 
+
 #define WW 5
 #define MM 8
 #define CARDS 6
+
 #endif
 
 int
@@ -116,7 +118,6 @@ main(int argc, char** argv)
         }
     }
     for (size_t i = 0; i < CARDS; i++){
-        printf("Copies: %d\n", copies[i]);
         answer += copies[i];
     }
 
